@@ -1,0 +1,54 @@
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  background: rgba(8, 8, 18, 0.95);
+  border-bottom: 1px solid rgba(124, 92, 191, 0.2);
+}
+
+.nav-logo {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  letter-spacing: 10px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+}
+
+.nav-logo span { color: #9b72e8; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-links a {
+  color: #7a79a0;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: white;
+}
+
+.btn-passeport {
+  background: #7c5cbf;
+  color: white;
+  border: none;
+  padding: 9px 22px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-passeport:hover { background: #9b72e8; }
