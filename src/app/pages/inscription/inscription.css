@@ -111,6 +111,14 @@
 }
 
 .btn-submit:hover { background: #9b72e8; }
+.btn-submit:disabled { background: #444; cursor: not-allowed; }
+
+.erreur {
+  color: #e05c5c;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+}
 
 .note {
   font-size: 12px;

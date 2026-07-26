@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { Navbar } from '../../shared/navbar/navbar';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-inscription',
-  imports: [FormsModule, Navbar],
+  imports: [FormsModule, Navbar, NgIf],
   templateUrl: './inscription.html',
   styleUrl: './inscription.css'
 })
@@ -13,20 +15,40 @@ export class Inscription {
   prenom = '';
   nom = '';
   email = '';
+  password = '';
   ville = '';
   pole = '';
+  erreur = '';
+  chargement = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   inscrire() {
-    if (this.prenom && this.nom) {
-      localStorage.setItem('kofis_user', JSON.stringify({
-        prenom: this.prenom,
-        nom: this.nom,
-        ville: this.ville,
-        pole: this.pole
-      }));
-      this.router.navigate(['/dashboard']);
+    if (!this.prenom || !this.nom || !this.email || !this.password) {
+      this.erreur = 'Merci de remplir tous les champs obligatoires.';
+      return;
     }
+
+    this.chargement = true;
+    this.erreur = '';
+
+    this.authService.inscrire({
+      prenom: this.prenom,
+      nom: this.nom,
+      email: this.email,
+      password: this.password,
+      ville: this.ville,
+      pole: this.pole
+    }).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('kofis_token', res.token);
+        localStorage.setItem('kofis_user', JSON.stringify(res.user));
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.erreur = err.error.message || 'Une erreur est survenue.';
+        this.chargement = false;
+      }
+    });
   }
 }

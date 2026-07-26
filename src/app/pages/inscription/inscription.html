@@ -5,9 +5,18 @@
     <h2>Obtiens ta<br><span>Nationalité</span><br>Virtuelle</h2>
     <p>Rejoindre KOFIS City, c'est comme rejoindre un pays — mais numérique, mondial, et ouvert à tous.</p>
     <div class="steps">
-      <div class="step"><div class="num">1</div><div><b>Crée ton profil citoyen</b><p>Nom, ville, domaine d'activité.</p></div></div>
-      <div class="step"><div class="num">2</div><div><b>Choisis ton rôle</b><p>Étudiant, professionnel, créateur...</p></div></div>
-      <div class="step"><div class="num">3</div><div><b>Reçois ton Passeport KOFIS</b><p>Ton identité officielle dans la ville.</p></div></div>
+      <div class="step">
+        <div class="num">1</div>
+        <div><b>Crée ton profil citoyen</b><p>Nom, ville, domaine d'activité.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div><b>Choisis ton rôle</b><p>Étudiant, professionnel, créateur...</p></div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div><b>Reçois ton Passeport KOFIS</b><p>Ton identité officielle dans la ville.</p></div>
+      </div>
     </div>
   </div>
 
@@ -16,17 +25,21 @@
     <p class="form-sub">Gratuit · Prend 2 minutes</p>
     <div class="form-row">
       <div class="form-group">
-        <label>Prénom</label>
+        <label>Prénom *</label>
         <input type="text" [(ngModel)]="prenom" placeholder="Khoyane">
       </div>
       <div class="form-group">
-        <label>Nom</label>
+        <label>Nom *</label>
         <input type="text" [(ngModel)]="nom" placeholder="Dramé">
       </div>
     </div>
     <div class="form-group">
-      <label>Email</label>
+      <label>Email *</label>
       <input type="email" [(ngModel)]="email" placeholder="khoyane@kofis.city">
+    </div>
+    <div class="form-group">
+      <label>Mot de passe *</label>
+      <input type="password" [(ngModel)]="password" placeholder="••••••••">
     </div>
     <div class="form-group">
       <label>Ville / Pays</label>
@@ -44,7 +57,10 @@
         <option>🛒 Marché</option>
       </select>
     </div>
-    <button class="btn-submit" (click)="inscrire()">Obtenir mon Passeport →</button>
+    <button class="btn-submit" (click)="inscrire()" [disabled]="chargement">
+      {{ chargement ? 'Création en cours...' : 'Obtenir mon Passeport →' }}
+    </button>
+    <p class="erreur" *ngIf="erreur">{{ erreur }}</p>
     <p class="note">✓ Gratuit · ✓ Sans carte bancaire · ✓ Accessible partout</p>
   </div>
 </section>
