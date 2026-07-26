@@ -1,1 +1,91 @@
-<p>dashboard works!</p>
+<app-navbar></app-navbar>
+
+<div class="dashboard">
+  <div class="sidebar">
+    <div class="user-card">
+      <div class="avatar">{{ initiales }}</div>
+      <div>
+        <div class="user-name">{{ prenom }} {{ nom }}</div>
+        <div class="user-role">Citoyen Actif</div>
+      </div>
+    </div>
+    <nav class="side-nav">
+      <a class="active">🏠 Tableau de bord</a>
+      <a routerLink="/education">🎓 Éducation</a>
+      <a>👤 Mon Profil</a>
+      <a>💬 Messages</a>
+      <a>🎫 Mon Passeport</a>
+    </nav>
+  </div>
+
+  <div class="main">
+    <div class="greeting">
+      <h2>Bonjour, <span>{{ prenom }}</span> 👋</h2>
+      <p>Bienvenue dans KOFIS City</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🏙️</div>
+        <div class="card-val">1</div>
+        <div class="card-label">Pôles actifs</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">👥</div>
+        <div class="card-val">0</div>
+        <div class="card-label">Connexions</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💰</div>
+        <div class="card-val">0</div>
+        <div class="card-label">FCFA générés</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⭐</div>
+        <div class="card-val">Nouveau</div>
+        <div class="card-label">Statut</div>
+      </div>
+    </div>
+
+    <div class="bottom-row">
+      <div class="block">
+        <h3>Activité récente</h3>
+        <div class="activity-item">
+          <div class="ai-icon">🎫</div>
+          <div>
+            <div class="ai-title">Passeport obtenu</div>
+            <div class="ai-desc">Bienvenue dans KOFIS City !</div>
+          </div>
+          <div class="ai-time">Maintenant</div>
+        </div>
+        <div class="activity-item">
+          <div class="ai-icon">🏙️</div>
+          <div>
+            <div class="ai-title">Pôle rejoint</div>
+            <div class="ai-desc">{{ pole }}</div>
+          </div>
+          <div class="ai-time">Aujourd'hui</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3>Explorer</h3>
+        <div class="pole-item" routerLink="/education">
+          <div class="pi-icon">🎓</div>
+          <div class="pi-name">Éducation</div>
+          <div class="pi-badge">240 cours</div>
+        </div>
+        <div class="pole-item">
+          <div class="pi-icon">🛒</div>
+          <div class="pi-name">Marché</div>
+          <div class="pi-badge">Bientôt</div>
+        </div>
+        <div class="pole-item">
+          <div class="pi-icon">🎵</div>
+          <div class="pi-name">Musique</div>
+          <div class="pi-badge">Bientôt</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
