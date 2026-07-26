@@ -13,6 +13,7 @@ export class Dashboard implements OnInit {
   nom = '';
   ville = '';
   pole = '';
+  email = '';
   initiales = '';
 
   constructor(private router: Router) {}
@@ -25,6 +26,7 @@ export class Dashboard implements OnInit {
       this.nom = user.nom;
       this.ville = user.ville;
       this.pole = user.pole;
+      this.email = user.email;
       this.initiales = user.prenom[0] + user.nom[0];
     } else {
       this.router.navigate(['/inscription']);
