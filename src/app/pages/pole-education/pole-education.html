@@ -1,1 +1,41 @@
-<p>pole-education works!</p>
+<app-navbar></app-navbar>
+
+<div class="pole-page">
+  <div class="pole-header">
+    <div class="pole-header-left">
+      <div class="pole-tag">Pôle · Savoir & Développement</div>
+      <h1>🎓 Éducation</h1>
+      <p>Professeurs, formateurs et élèves du monde entier — sur une seule plateforme.</p>
+    </div>
+    <div class="pole-stats">
+      <div class="pstat"><span class="pn">240</span><span class="pl">Cours</span></div>
+      <div class="pstat"><span class="pn">1 200</span><span class="pl">Formateurs</span></div>
+      <div class="pstat"><span class="pn">3–8%</span><span class="pl">Commission</span></div>
+    </div>
+  </div>
+
+  <div class="pole-content">
+    <div class="tabs">
+      <button class="tab active">Tous les cours</button>
+      <button class="tab">Formateurs</button>
+      <button class="tab">Certifications</button>
+    </div>
+
+    <div class="courses-grid">
+      <div class="course-card" *ngFor="let cours of cours">
+        <div class="course-thumb" [style.background]="cours.bg">
+          <span>{{ cours.emoji }}</span>
+        </div>
+        <div class="course-body">
+          <div class="course-tag">{{ cours.categorie }}</div>
+          <div class="course-title">{{ cours.titre }}</div>
+          <div class="course-prof">Par {{ cours.prof }}</div>
+          <div class="course-footer">
+            <span class="course-price">{{ cours.prix }} FCFA</span>
+            <button class="btn-enroll">S'inscrire</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
