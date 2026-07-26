@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:3000/api/auth';
+  private passeportUrl = 'http://localhost:3000/api/passeport';
 
   constructor(private http: HttpClient) {}
 
@@ -15,5 +16,13 @@ export class AuthService {
 
   connecter(data: any) {
     return this.http.post(`${this.apiUrl}/connexion`, data);
+  }
+
+  telechargerPasseport() {
+    const token = localStorage.getItem('kofis_token');
+    return this.http.get(`${this.passeportUrl}/telecharger`, {
+      headers: { Authorization: `Bearer ${token}` },
+      responseType: 'blob'
+    });
   }
 }

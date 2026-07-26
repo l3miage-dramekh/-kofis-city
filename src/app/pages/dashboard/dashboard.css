@@ -164,3 +164,23 @@
   color: #7a79a0;
   line-height: 1.5;
 }
+
+.btn-download {
+  width: 100%;
+  padding: 12px;
+  background: rgba(124,92,191,.2);
+  color: #9b72e8;
+  border: 1px solid rgba(124,92,191,.4);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  margin-bottom: 16px;
+  font-family: inherit;
+}
+
+.btn-download:hover {
+  background: #7c5cbf;
+  color: white;
+}
