@@ -16,16 +16,29 @@ export class Inscription {
   nom = '';
   email = '';
   password = '';
+  confirmPassword = '';
   ville = '';
   pole = '';
   erreur = '';
   chargement = false;
+  voirPassword = false;
+  voirConfirm = false;
 
   constructor(private router: Router, private authService: AuthService) {}
 
   inscrire() {
     if (!this.prenom || !this.nom || !this.email || !this.password) {
       this.erreur = 'Merci de remplir tous les champs obligatoires.';
+      return;
+    }
+
+    if (this.password !== this.confirmPassword) {
+      this.erreur = 'Les mots de passe ne correspondent pas.';
+      return;
+    }
+
+    if (this.password.length < 6) {
+      this.erreur = 'Le mot de passe doit contenir au moins 6 caractères.';
       return;
     }
 

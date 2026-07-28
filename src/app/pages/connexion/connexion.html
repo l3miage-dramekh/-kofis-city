@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+
+<section class="connexion-page">
+  <div class="left">
+    <h2>Content de te<br>revoir dans<br><span>KOFIS City</span></h2>
+    <p>Connecte-toi pour accéder à ton espace citoyen et reprendre tes activités.</p>
+    <div class="passport-preview">
+      <div class="pp-header">
+        <span class="pp-logo">K<span>O</span>FIS</span>
+        <span class="pp-label">Passeport Citoyen</span>
+      </div>
+      <div class="pp-body">
+        <div class="pp-icon">🏙️</div>
+        <div class="pp-text">Accède à tes 38 pôles</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <h3>Se connecter</h3>
+    <p class="form-sub">Accède à ton espace KOFIS City</p>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" placeholder="khoyane@kofis.city">
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <div class="input-eye">
+        <input [type]="voirPassword ? 'text' : 'password'" [(ngModel)]="password" placeholder="••••••••">
+        <button type="button" class="eye-btn" (click)="voirPassword = !voirPassword">
+          {{ voirPassword ? '🙈' : '👁️' }}
+        </button>
+      </div>
+    </div>
+
+    <button class="btn-submit" (click)="connecter()" [disabled]="chargement">
+      {{ chargement ? 'Connexion en cours...' : 'Accéder à mon espace →' }}
+    </button>
+
+    <p class="erreur" *ngIf="erreur">{{ erreur }}</p>
+
+    <p class="note">
+      Pas encore citoyen ?
+      <a routerLink="/inscription">Obtenir mon Passeport →</a>
+    </p>
+  </div>
+</section>
