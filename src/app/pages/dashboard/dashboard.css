@@ -184,3 +184,29 @@
   background: #7c5cbf;
   color: white;
 }
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    padding: 100px 20px 40px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .bottom-row {
+    grid-template-columns: 1fr;
+  }
+
+  .greeting h2 {
+    font-size: 24px;
+  }
+}

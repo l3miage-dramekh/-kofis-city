@@ -71,3 +71,31 @@
   background: rgba(224, 92, 92, 0.1);
   border-color: #e05c5c;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 14px 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .nav-logo {
+    font-size: 18px;
+    letter-spacing: 6px;
+  }
+
+  .nav-links {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+  }
+
+  .btn-passeport,
+  .btn-deconnexion {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+}

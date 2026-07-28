@@ -147,3 +147,33 @@
 }
 
 .btn-enroll:hover { background: #7c5cbf; color: white; }
+
+@media (max-width: 768px) {
+  .pole-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 100px 20px 30px;
+    gap: 24px;
+  }
+
+  .pole-header-left h1 {
+    font-size: 36px;
+  }
+
+  .pole-stats {
+    gap: 24px;
+  }
+
+  .pole-content {
+    padding: 24px 20px;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tabs {
+    overflow-x: auto;
+    width: 100%;
+  }
+}

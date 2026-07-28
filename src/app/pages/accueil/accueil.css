@@ -90,3 +90,34 @@ h1 span { color: #9b72e8; }
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 20px 60px;
+  }
+
+  h1 {
+    font-size: 60px;
+    letter-spacing: -2px;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-stats {
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

@@ -149,3 +149,23 @@
   padding: 0;
   line-height: 1;
 }
+
+@media (max-width: 768px) {
+  .inscription-page {
+    grid-template-columns: 1fr;
+    padding: 100px 20px 40px;
+    gap: 40px;
+  }
+
+  .left h2 {
+    font-size: 32px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-card {
+    padding: 24px;
+  }
+}
