@@ -2,7 +2,9 @@
   <div class="nav-logo" routerLink="/">K<span>O</span>FIS</div>
   <div class="nav-links">
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Accueil</a>
-    <a routerLink="/connexion" routerLinkActive="active">Se connecter</a>
-    <button class="btn-passeport" routerLink="/inscription">Obtenir mon Passeport</button>
+    <a routerLink="/dashboard" routerLinkActive="active" *ngIf="estConnecte()">Mon espace</a>
+    <a routerLink="/connexion" routerLinkActive="active" *ngIf="!estConnecte()">Se connecter</a>
+    <button class="btn-deconnexion" (click)="deconnecter()" *ngIf="estConnecte()">Se déconnecter</button>
+    <button class="btn-passeport" routerLink="/inscription" *ngIf="!estConnecte()">Obtenir mon Passeport</button>
   </div>
 </nav>

@@ -49,6 +49,25 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
+  font-family: inherit;
 }
 
 .btn-passeport:hover { background: #9b72e8; }
+
+.btn-deconnexion {
+  background: transparent;
+  color: #e05c5c;
+  border: 1px solid rgba(224, 92, 92, 0.4);
+  padding: 9px 22px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.btn-deconnexion:hover {
+  background: rgba(224, 92, 92, 0.1);
+  border-color: #e05c5c;
+}
