@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<button class="btn-retour" onclick="history.back()">← Retour</button>
+
+<div class="pole-page">
+  <div class="pole-header">
+    <div class="pole-header-left">
+      <div class="pole-tag">Pôle · Économie & Commerce</div>
+      <h1>🛒 Marché</h1>
+      <p>Vendeurs, acheteurs et commerçants du monde entier — sur une seule plateforme.</p>
+    </div>
+    <div class="pole-stats">
+      <div class="pstat"><span class="pn">1 200</span><span class="pl">Produits</span></div>
+      <div class="pstat"><span class="pn">340</span><span class="pl">Vendeurs</span></div>
+      <div class="pstat"><span class="pn">3–5%</span><span class="pl">Commission</span></div>
+    </div>
+  </div>
+
+  <div class="pole-content">
+    <div class="tabs">
+      <button class="tab active">Tous les produits</button>
+      <button class="tab">Mode</button>
+      <button class="tab">Électronique</button>
+      <button class="tab">Art & Artisanat</button>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card" *ngFor="let produit of produits">
+        <div class="product-thumb" [style.background]="produit.bg">
+          <span>{{ produit.emoji }}</span>
+        </div>
+        <div class="product-body">
+          <div class="product-tag">{{ produit.categorie }}</div>
+          <div class="product-nom">{{ produit.nom }}</div>
+          <div class="product-vendeur">Par {{ produit.vendeur }} · {{ produit.ville }}</div>
+          <div class="product-footer">
+            <span class="product-price">{{ produit.prix }} FCFA</span>
+            <button class="btn-acheter">Acheter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

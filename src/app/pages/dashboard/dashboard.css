@@ -55,8 +55,7 @@
 .side-nav a:hover { background: rgba(255,255,255,.05); color: white; }
 .side-nav a.active { background: rgba(124,92,191,.2); color: white; }
 
-.main { padding: 40px; }
-
+.main { padding: 16px 40px; }
 .greeting { margin-bottom: 32px; }
 .greeting h2 { font-family: Georgia, serif; font-size: 32px; font-weight: 700; }
 .greeting h2 span { color: #9b72e8; }

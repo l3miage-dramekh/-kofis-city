@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<button class="btn-retour" onclick="history.back()">← Retour</button>
+<div class="pole-page">
+  <div class="pole-header">
+    <div class="pole-header-left">
+      <div class="pole-tag">Pôle · Culture & Divertissement</div>
+      <h1>🎵 Musique</h1>
+      <p>Artistes, producteurs et fans du monde entier — sur une seule plateforme.</p>
+    </div>
+    <div class="pole-stats">
+      <div class="pstat"><span class="pn">580</span><span class="pl">Artistes</span></div>
+      <div class="pstat"><span class="pn">12K</span><span class="pl">Titres</span></div>
+      <div class="pstat"><span class="pn">5%</span><span class="pl">Commission</span></div>
+    </div>
+  </div>
+
+  <div class="pole-content">
+    <div class="tabs">
+      <button class="tab active">Tous les artistes</button>
+      <button class="tab">Afrobeat</button>
+      <button class="tab">Hip-Hop</button>
+      <button class="tab">Jazz</button>
+    </div>
+
+    <div class="artistes-grid">
+      <div class="artiste-card" *ngFor="let artiste of artistes">
+        <div class="artiste-thumb" [style.background]="artiste.bg">
+          <span>{{ artiste.emoji }}</span>
+        </div>
+        <div class="artiste-body">
+          <div class="artiste-genre">{{ artiste.genre }}</div>
+          <div class="artiste-nom">{{ artiste.nom }}</div>
+          <div class="artiste-titre">🎵 {{ artiste.titre }}</div>
+          <div class="artiste-info">
+            <span class="artiste-streams">▶ {{ artiste.streams }} streams</span>
+            <span class="artiste-ville">📍 {{ artiste.ville }}</span>
+          </div>
+          <div class="artiste-footer">
+            <button class="btn-ecouter">▶ Écouter</button>
+            <button class="btn-suivre">+ Suivre</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

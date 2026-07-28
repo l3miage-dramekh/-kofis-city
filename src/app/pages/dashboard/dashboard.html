@@ -12,6 +12,8 @@
     <nav class="side-nav">
       <a class="active">🏠 Tableau de bord</a>
       <a routerLink="/education">🎓 Éducation</a>
+      <a routerLink="/marche">🛒 Marché</a>
+      <a routerLink="/musique">🎵 Musique</a>
       <a>👤 Mon Profil</a>
       <a>💬 Messages</a>
       <a>🎫 Mon Passeport</a>
@@ -27,7 +29,7 @@
     <div class="cards">
       <div class="card">
         <div class="card-icon">🏙️</div>
-        <div class="card-val">1</div>
+        <div class="card-val">3</div>
         <div class="card-label">Pôles actifs</div>
       </div>
       <div class="card">
@@ -48,55 +50,36 @@
     </div>
 
     <div class="bottom-row">
-      <div class="block">
-  <h3>Activité récente</h3>
-  
-  <div class="passport-alert">
-    <div class="alert-icon">🎫</div>
-    <div class="alert-text">
-      <div class="alert-title">Ton Passeport KOFIS est prêt !</div>
-      <div class="alert-desc">Un email avec ton passeport a été envoyé à {{ email }}. Vérifie ta boîte mail !</div>
-    </div>
-  </div>
+      <div class="block" style="grid-column: 1 / -1;">
+        <h3>Activité récente</h3>
 
-  <button class="btn-download" (click)="telechargerPasseport()">
-  📥 Télécharger mon Passeport PDF
-</button>
-
-  <div class="activity-item">
-    <div class="ai-icon">🎫</div>
-    <div>
-      <div class="ai-title">Passeport obtenu</div>
-      <div class="ai-desc">Bienvenue dans KOFIS City !</div>
-    </div>
-    <div class="ai-time">Maintenant</div>
-  </div>
-  <div class="activity-item">
-    <div class="ai-icon">🏙️</div>
-    <div>
-      <div class="ai-title">Pôle rejoint</div>
-      <div class="ai-desc">{{ pole }}</div>
-    </div>
-    <div class="ai-time">Aujourd'hui</div>
-  </div>
-</div>
-
-      <div class="block">
-        <h3>Explorer</h3>
-        <div class="pole-item" routerLink="/education">
-          <div class="pi-icon">🎓</div>
-          <div class="pi-name">Éducation</div>
-          <div class="pi-badge">240 cours</div>
+        <div class="passport-alert">
+          <div class="alert-icon">🎫</div>
+          <div class="alert-text">
+            <div class="alert-title">Ton Passeport KOFIS est prêt !</div>
+            <div class="alert-desc">Un email avec ton passeport a été envoyé à {{ email }}. Vérifie ta boîte mail !</div>
+          </div>
         </div>
-        <div class="pole-item">
-          <div class="pi-icon">🛒</div>
-          <div class="pi-name">Marché</div>
-          <div class="pi-badge">Bientôt</div>
+
+        <button class="btn-download" (click)="telechargerPasseport()">
+          📥 Télécharger mon Passeport PDF
+        </button>
+
+        <div class="activity-item">
+          <div class="ai-icon">🎫</div>
+          <div>
+            <div class="ai-title">Passeport obtenu</div>
+            <div class="ai-desc">Bienvenue dans KOFIS City !</div>
+          </div>
+          <div class="ai-time">Maintenant</div>
         </div>
-        <div class="pole-item">
-          <div class="pi-icon">🎵</div>
-          <div class="pi-name">Musique</div>
-          <div class="pi-badge">Bientôt</div>
+        <div class="activity-item">
+          <div class="ai-icon">🏙️</div>
+          <div>
+            <div class="ai-title">Pôle rejoint</div>
+            <div class="ai-desc">{{ pole }}</div>
+          </div>
+          <div class="ai-time">Aujourd'hui</div>
         </div>
       </div>
     </div>
