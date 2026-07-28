@@ -1,0 +1,80 @@
+<app-navbar></app-navbar>
+
+<div class="messagerie">
+  <aside class="liste-conversations">
+    <div class="liste-header">
+      <h3>Messages</h3>
+      <input type="text" class="recherche" placeholder="Rechercher..." />
+    </div>
+
+    <div class="conversations" *ngIf="!chargement">
+      <button
+        type="button"
+        class="conversation-item"
+        *ngFor="let conversation of conversations"
+        [class.active]="conversationActive?.id === conversation.id"
+        (click)="selectionner(conversation)">
+        <div class="avatar">{{ conversation.initiales }}</div>
+        <div class="conversation-info">
+          <div class="ligne-haut">
+            <span class="nom">{{ conversation.nom }}</span>
+            <span class="heure">{{ conversation.heure }}</span>
+          </div>
+          <div class="ligne-bas">
+            <span class="dernier-message">{{ conversation.dernierMessage }}</span>
+            <span class="badge-non-lu" *ngIf="conversation.nonLus > 0">{{ conversation.nonLus }}</span>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="chargement" *ngIf="chargement">Chargement des conversations...</div>
+  </aside>
+
+  <section class="chat" *ngIf="conversationActive; else aucuneConversation">
+    <div class="chat-header">
+      <div class="avatar">{{ conversationActive.initiales }}</div>
+      <div>
+        <div class="nom">{{ conversationActive.nom }}</div>
+        <div class="statut" [class.en-ligne]="conversationActive.enLigne">
+          {{ conversationActive.enLigne ? '● En ligne' : conversationActive.pole }}
+        </div>
+      </div>
+    </div>
+
+    <div class="messages">
+      <ng-container *ngFor="let message of conversationActive.messages">
+        <div class="message" [class.moi]="message.expediteur === 'moi'" *ngIf="message.type === 'texte'">
+          <p>{{ message.texte }}</p>
+          <span class="heure-message">{{ message.heure }} <span *ngIf="message.expediteur === 'moi'">✓✓</span></span>
+        </div>
+
+        <div class="carte-produit" *ngIf="message.type === 'produit' && message.produit as produit">
+          <div class="produit-icone">🛍️</div>
+          <div class="produit-info">
+            <div class="produit-nom">{{ produit.nom }}<span *ngIf="produit.quantite"> × {{ produit.quantite }}</span></div>
+            <div class="produit-prix">{{ formaterPrix(produit.prix) }}</div>
+          </div>
+          <button type="button" class="btn-payer" (click)="payerWave(produit)">Payer Wave →</button>
+        </div>
+      </ng-container>
+    </div>
+
+    <p class="note-info" *ngIf="noteInfo">{{ noteInfo }}</p>
+
+    <div class="saisie">
+      <input
+        type="text"
+        placeholder="Écrire un message..."
+        [(ngModel)]="nouveauMessage"
+        (keyup.enter)="envoyer()" />
+      <button type="button" class="btn-envoyer" (click)="envoyer()" [disabled]="!nouveauMessage.trim()">→</button>
+    </div>
+  </section>
+
+  <ng-template #aucuneConversation>
+    <section class="chat chat-vide">
+      <p>Sélectionne une conversation pour commencer à discuter.</p>
+    </section>
+  </ng-template>
+</div>

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { Navbar } from '../../shared/navbar/navbar';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-pole-marche',
-  imports: [Navbar, NgFor, RouterLink],
+  imports: [Navbar, NgFor],
   templateUrl: './pole-marche.html',
   styleUrl: './pole-marche.css'
 })

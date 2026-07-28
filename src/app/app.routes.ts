@@ -6,6 +6,7 @@ import { PoleEducation } from './pages/pole-education/pole-education';
 import { Connexion } from './pages/connexion/connexion';
 import { PoleMarche } from './pages/pole-marche/pole-marche';
 import { PoleMusique } from './pages/pole-musique/pole-musique';
+import { Messagerie } from './pages/messagerie/messagerie';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
@@ -16,5 +17,6 @@ export const routes: Routes = [
   { path: 'marche', component: PoleMarche },
   { path: 'musique', component: PoleMusique },
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
+  { path: 'messagerie', component: Messagerie, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];
