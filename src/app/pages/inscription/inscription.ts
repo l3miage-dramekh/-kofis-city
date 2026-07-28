@@ -59,8 +59,12 @@ export class Inscription {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        this.erreur = err.error.message || 'Une erreur est survenue.';
         this.chargement = false;
+        if (err.status === 0) {
+          this.erreur = 'Impossible de contacter le serveur. Il est peut-être en train de démarrer, réessaie dans quelques secondes.';
+        } else {
+          this.erreur = err?.error?.message || 'Une erreur est survenue.';
+        }
       }
     });
   }
