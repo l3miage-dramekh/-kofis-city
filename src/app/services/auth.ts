@@ -5,9 +5,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/auth';
-  private passeportUrl = 'http://localhost:3000/api/passeport';
-
+  private apiUrl = 'https://kofis-backend-pnpm.onrender.com/api/auth';
+  private passeportUrl = 'https://kofis-backend-pnpm.onrender.com/api/passeport';
+  
   constructor(private http: HttpClient) {}
 
   inscrire(data: any) {
