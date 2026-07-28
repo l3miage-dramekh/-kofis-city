@@ -63,12 +63,12 @@
       <label>Pôle principal</label>
       <select [(ngModel)]="pole">
         <option value="">Choisir un pôle...</option>
-        <option>🎓 Éducation</option>
-        <option>💻 Tech & Innovation</option>
-        <option>🎵 Musique</option>
-        <option>💼 Travail & Emploi</option>
-        <option>🏥 Santé</option>
-        <option>🛒 Marché</option>
+        <option value="education">🎓 Éducation</option>
+        <option value="tech">💻 Tech & Innovation</option>
+        <option value="musique">🎵 Musique</option>
+        <option value="travail">💼 Travail & Emploi</option>
+        <option value="sante">🏥 Santé</option>
+        <option value="marche">🛒 Marché</option>
       </select>
     </div>
     <button class="btn-submit" (click)="inscrire()" [disabled]="chargement">
