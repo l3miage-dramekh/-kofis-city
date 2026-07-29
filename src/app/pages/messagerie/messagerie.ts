@@ -20,6 +20,8 @@ export class Messagerie implements OnInit, AfterViewChecked {
   recherche = '';
   chargement = true;
   afficherNouvelleConversation = false;
+  menuPaiementOuvertPour: string | null = null;
+  noteInfo = '';
 
   private doitDeraouler = false;
 
@@ -80,6 +82,16 @@ export class Messagerie implements OnInit, AfterViewChecked {
 
   basculerNouvelleConversation() {
     this.afficherNouvelleConversation = !this.afficherNouvelleConversation;
+  }
+
+  basculerMenuPaiement(messageId: string) {
+    this.menuPaiementOuvertPour = this.menuPaiementOuvertPour === messageId ? null : messageId;
+  }
+
+  choisirMoyenPaiement(moyen: string) {
+    this.menuPaiementOuvertPour = null;
+    this.noteInfo = `Paiement par ${moyen} — bientôt disponible (nécessite l'intégration backend).`;
+    setTimeout(() => (this.noteInfo = ''), 4000);
   }
 
   demarrerAvec(contact: ContactDisponible) {

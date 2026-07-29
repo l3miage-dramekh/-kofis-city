@@ -63,25 +63,42 @@ describe('Messagerie', () => {
     expect(component.conversationsFiltrees.every(c => c.pole?.toLowerCase().includes('éducation'))).toBeTruthy();
   });
 
-  it('le bouton Payer est désactivé (paiement pas encore implémenté)', async () => {
+  it('le bouton Payer ouvre un menu avec les moyens de paiement disponibles', async () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
     const boutonPayer: HTMLButtonElement | null = fixture.nativeElement.querySelector('.btn-payer');
     expect(boutonPayer).toBeTruthy();
-    expect(boutonPayer?.disabled).toBe(true);
-  });
+    expect(fixture.nativeElement.querySelector('.menu-paiement')).toBeFalsy();
 
-  it('propose plusieurs moyens de paiement (pas seulement Wave)', async () => {
+    boutonPayer!.click();
     fixture.detectChanges();
-    await fixture.whenStable();
 
-    const moyens: NodeListOf<HTMLSpanElement> = fixture.nativeElement.querySelectorAll('.moyen-paiement');
-    const libelles = Array.from(moyens).map(el => el.textContent?.trim());
+    const options: NodeListOf<HTMLButtonElement> = fixture.nativeElement.querySelectorAll('.moyen-paiement-option');
+    const libelles = Array.from(options).map(el => el.textContent?.trim());
 
     expect(libelles).toContain('Wave');
     expect(libelles).toContain('Orange Money');
     expect(libelles).toContain('Carte bancaire');
+  });
+
+  it("choisir un moyen de paiement affiche une note 'bientôt disponible' et referme le menu", async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    fixture.nativeElement.querySelector('.btn-payer').click();
+    fixture.detectChanges();
+
+    const options: HTMLButtonElement[] = Array.from(
+      fixture.nativeElement.querySelectorAll('.moyen-paiement-option')
+    );
+    const optionWave = options.find(el => el.textContent?.trim() === 'Wave');
+    optionWave?.click();
+    fixture.detectChanges();
+
+    expect(component.noteInfo).toContain('Wave');
+    expect(component.menuPaiementOuvertPour).toBeNull();
+    expect(fixture.nativeElement.querySelector('.menu-paiement')).toBeFalsy();
   });
 
   it('charge les contacts disponibles pour démarrer une nouvelle conversation', async () => {

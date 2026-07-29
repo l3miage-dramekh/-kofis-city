@@ -356,27 +356,50 @@
 }
 
 .bloc-paiement {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
+  position: relative;
   flex-shrink: 0;
 }
 
-.moyens-paiement {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+.btn-payer:hover { background: rgba(255, 255, 255, .12); }
+
+.menu-paiement {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 5;
+  background: #1a1a3a;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 140px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
 }
 
-.moyen-paiement {
-  font-size: 9px;
-  color: #7a79a0;
-  background: rgba(255, 255, 255, .05);
-  border: 1px solid rgba(255, 255, 255, .08);
-  border-radius: 6px;
-  padding: 1px 6px;
+.moyen-paiement-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
+  color: white;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.moyen-paiement-option:last-child { border-bottom: none; }
+.moyen-paiement-option:hover { background: rgba(155, 114, 232, .15); }
+
+.note-info {
+  margin: 0 32px 8px;
+  padding: 8px 14px;
+  background: rgba(155, 114, 232, .12);
+  border: 1px solid rgba(155, 114, 232, .3);
+  border-radius: 10px;
+  font-size: 12px;
+  color: #d8cdf5;
 }
 
 .saisie {

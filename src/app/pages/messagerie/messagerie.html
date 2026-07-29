@@ -115,17 +115,26 @@
             <button
               type="button"
               class="btn-payer"
-              disabled
-              [title]="'Paiement bientôt disponible (' + (produit.moyensPaiement || ['Wave']).join(', ') + ') — intégration backend en cours'">
+              (click)="basculerMenuPaiement(message.id)"
+              [attr.aria-expanded]="menuPaiementOuvertPour === message.id"
+              aria-haspopup="true">
               Payer <span class="badge-bientot">Bientôt</span>
             </button>
-            <div class="moyens-paiement" *ngIf="produit.moyensPaiement?.length">
-              <span class="moyen-paiement" *ngFor="let moyen of produit.moyensPaiement">{{ moyen }}</span>
+            <div class="menu-paiement" *ngIf="menuPaiementOuvertPour === message.id">
+              <button
+                type="button"
+                class="moyen-paiement-option"
+                *ngFor="let moyen of produit.moyensPaiement"
+                (click)="choisirMoyenPaiement(moyen)">
+                {{ moyen }}
+              </button>
             </div>
           </div>
         </div>
       </ng-container>
     </div>
+
+    <p class="note-info" *ngIf="noteInfo">{{ noteInfo }}</p>
 
     <div class="saisie">
       <input
