@@ -102,4 +102,24 @@ describe('Messagerie', () => {
     const enLigneAttendu = component.conversations.filter(c => c.enLigne).length;
     expect(component.nombreEnLigne).toBe(enLigneAttendu);
   });
+
+  it('affiche les conversations sous forme de cercles (une carte par conversation + une pour "Nouveau")', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const cartes: NodeListOf<HTMLButtonElement> = fixture.nativeElement.querySelectorAll('.carte-contact');
+    // +1 pour la carte "Nouvelle conversation"
+    expect(cartes.length).toBe(component.conversations.length + 1);
+
+    const premiereCarteConversation = fixture.nativeElement.querySelector('.carte-contact:not(.carte-nouvelle)');
+    expect(premiereCarteConversation.querySelector('.avatar-cercle')).toBeTruthy();
+  });
+
+  it("porte un aria-label complet sur chaque cercle pour l'accessibilité", () => {
+    const conversation = component.conversations[0];
+    const libelle = component.libelleConversation(conversation);
+
+    expect(libelle).toContain(conversation.nom);
+    expect(libelle).toMatch(/en ligne|hors ligne/);
+  });
 });

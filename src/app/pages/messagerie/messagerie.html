@@ -16,62 +16,67 @@
         [(ngModel)]="recherche" />
     </div>
 
-    <div class="nouvelle-conversation-bloc">
-      <button
-        type="button"
-        class="btn-nouvelle-conversation"
-        (click)="basculerNouvelleConversation()"
-        [attr.aria-expanded]="afficherNouvelleConversation">
-        <span>+</span> Nouvelle conversation
-      </button>
-
-      <div class="dropdown-contacts" *ngIf="afficherNouvelleConversation">
-        <button
-          type="button"
-          class="contact-disponible"
-          *ngFor="let contact of contactsDisponibles; trackBy: identifierContact"
-          (click)="demarrerAvec(contact)">
-          <div class="avatar avatar-petit">{{ contact.initiales }}</div>
-          <div class="contact-info">
-            <span class="nom">{{ contact.nom }}</span>
-            <span class="pole">{{ contact.pole }}</span>
-          </div>
-          <span class="point-statut" [class.en-ligne]="contact.enLigne"></span>
-        </button>
-
-        <p class="aucun-contact" *ngIf="!contactsDisponibles.length">
-          Tous tes contacts ont déjà une conversation.
-        </p>
-      </div>
-    </div>
-
     <div class="section-titre" *ngIf="!chargement">
       Conversations ({{ conversationsFiltrees.length }})
     </div>
 
-    <div class="conversations" *ngIf="!chargement">
+    <div class="grille-contacts" *ngIf="!chargement" role="list" aria-label="Conversations">
       <button
         type="button"
-        class="conversation-item"
+        class="carte-contact carte-nouvelle"
+        role="listitem"
+        (click)="basculerNouvelleConversation()"
+        [attr.aria-expanded]="afficherNouvelleConversation"
+        aria-label="Démarrer une nouvelle conversation">
+        <span class="cercle-nouvelle">+</span>
+        <span class="nom-cercle">Nouveau</span>
+      </button>
+
+      <button
+        type="button"
+        class="carte-contact"
+        role="listitem"
         *ngFor="let conversation of conversationsFiltrees; trackBy: identifierConversation"
         [class.active]="conversationActive?.id === conversation.id"
         [attr.aria-current]="conversationActive?.id === conversation.id"
+        [attr.aria-label]="libelleConversation(conversation)"
         (click)="selectionner(conversation)">
-        <div class="avatar">{{ conversation.initiales }}</div>
-        <div class="conversation-info">
-          <div class="ligne-haut">
-            <span class="nom">{{ conversation.nom }}</span>
-            <span class="heure">{{ conversation.heure }}</span>
-          </div>
-          <div class="ligne-bas">
-            <span class="dernier-message">{{ conversation.dernierMessage }}</span>
-            <span class="badge-non-lu" *ngIf="conversation.nonLus > 0">{{ conversation.nonLus }}</span>
-          </div>
-        </div>
+        <span class="cercle-wrapper">
+          <span class="avatar avatar-cercle">{{ conversation.initiales }}</span>
+          <span class="point-statut point-statut-cercle" [class.en-ligne]="conversation.enLigne" aria-hidden="true"></span>
+          <span class="badge-non-lu badge-cercle" *ngIf="conversation.nonLus > 0" aria-hidden="true">{{ conversation.nonLus }}</span>
+        </span>
+        <span class="nom-cercle">{{ conversation.nom.split(' ')[0] }}</span>
+        <span class="apercu-cercle">{{ conversation.dernierMessage }}</span>
       </button>
 
       <p class="aucun-resultat" *ngIf="!conversationsFiltrees.length">
         Aucune conversation ne correspond à "{{ recherche }}".
+      </p>
+    </div>
+
+    <div class="section-titre" *ngIf="afficherNouvelleConversation">
+      Démarrer avec
+    </div>
+
+    <div class="grille-contacts grille-disponibles" *ngIf="afficherNouvelleConversation" role="list" aria-label="Contacts disponibles">
+      <button
+        type="button"
+        class="carte-contact"
+        role="listitem"
+        *ngFor="let contact of contactsDisponibles; trackBy: identifierContact"
+        [attr.aria-label]="libelleContact(contact)"
+        (click)="demarrerAvec(contact)">
+        <span class="cercle-wrapper">
+          <span class="avatar avatar-cercle">{{ contact.initiales }}</span>
+          <span class="point-statut point-statut-cercle" [class.en-ligne]="contact.enLigne" aria-hidden="true"></span>
+        </span>
+        <span class="nom-cercle">{{ contact.nom.split(' ')[0] }}</span>
+        <span class="apercu-cercle">{{ contact.pole }}</span>
+      </button>
+
+      <p class="aucun-contact" *ngIf="!contactsDisponibles.length">
+        Tous tes contacts ont déjà une conversation.
       </p>
     </div>
 

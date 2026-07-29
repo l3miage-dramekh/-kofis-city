@@ -112,6 +112,22 @@ export class Messagerie implements OnInit, AfterViewChecked {
     return `${montant.toLocaleString('fr-FR')} FCFA`;
   }
 
+  // Libellé complet pour les lecteurs d'écran : le format en cercles
+  // repose surtout sur les initiales visuellement, il faut donc que
+  // l'aria-label porte toute l'info (nom, statut, non-lus).
+  libelleConversation(conversation: Conversation): string {
+    const statut = conversation.enLigne ? 'en ligne' : 'hors ligne';
+    const nonLus = conversation.nonLus > 0
+      ? `, ${conversation.nonLus} message${conversation.nonLus > 1 ? 's' : ''} non lu${conversation.nonLus > 1 ? 's' : ''}`
+      : '';
+    return `${conversation.nom}, ${statut}${nonLus}`;
+  }
+
+  libelleContact(contact: ContactDisponible): string {
+    const statut = contact.enLigne ? 'en ligne' : 'hors ligne';
+    return `Démarrer une conversation avec ${contact.nom}, ${contact.pole}, ${statut}`;
+  }
+
   private deraouler() {
     const element = this.zoneMessages?.nativeElement;
     if (element) {
