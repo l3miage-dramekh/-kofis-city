@@ -4,23 +4,27 @@
   grid-template-columns: 320px 1fr;
   padding-top: 80px;
   color: white;
-  /* Fond "univers" : nébuleuse discrète + étoiles, plutôt qu'un bleu
-     marine uni. Reste sombre et lisible : le panneau de gauche et les
-     bulles de message gardent leurs propres fonds opaques par-dessus. */
+  /* Fond inspiré d'une place publique la nuit : un ciel étoilé
+     ("l'univers", la vie) au-dessus d'une lueur chaleureuse à
+     l'horizon (la ville, la communauté, là où les discussions ont
+     lieu) — plutôt qu'un simple bleu marine uni ou un champ d'étoiles
+     abstrait. Le panneau de gauche et les bulles de message gardent
+     leurs propres fonds opaques par-dessus pour rester lisibles. */
   background-color: #05051c;
   background-image:
-    radial-gradient(1.5px 1.5px at 12% 22%, rgba(255, 255, 255, .55) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 78% 12%, rgba(255, 255, 255, .4) 50%, transparent 51%),
-    radial-gradient(1px 1px at 45% 65%, rgba(255, 255, 255, .35) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 25% 82%, rgba(255, 255, 255, .3) 50%, transparent 51%),
-    radial-gradient(1px 1px at 92% 70%, rgba(255, 255, 255, .4) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 60% 38%, rgba(255, 255, 255, .3) 50%, transparent 51%),
-    radial-gradient(circle at 20% 10%, rgba(124, 92, 191, .3), transparent 42%),
-    radial-gradient(circle at 85% 0%, rgba(15, 110, 86, .16), transparent 38%),
-    radial-gradient(circle at 55% 100%, rgba(155, 114, 232, .16), transparent 48%);
-  background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, no-repeat, no-repeat, no-repeat;
-  background-size: 180px 180px, 220px 220px, 160px 160px, 200px 200px, 190px 190px, 210px 210px, 100% 100%, 100% 100%, 100% 100%;
-  background-attachment: fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed;
+    radial-gradient(1.5px 1.5px at 12% 15%, rgba(255, 255, 255, .5) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 78% 8%, rgba(255, 255, 255, .4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 45% 25%, rgba(255, 255, 255, .35) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 25% 35%, rgba(255, 255, 255, .3) 50%, transparent 51%),
+    radial-gradient(1px 1px at 92% 20%, rgba(255, 255, 255, .4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 60% 12%, rgba(255, 255, 255, .3) 50%, transparent 51%),
+    radial-gradient(circle at 20% 5%, rgba(124, 92, 191, .3), transparent 42%),
+    radial-gradient(circle at 85% 0%, rgba(15, 110, 86, .14), transparent 38%),
+    linear-gradient(to top, rgba(190, 120, 25, .22) 0%, rgba(190, 120, 25, .08) 16%, transparent 38%),
+    linear-gradient(to top, rgba(155, 114, 232, .16) 0%, transparent 28%);
+  background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 180px 180px, 220px 220px, 160px 160px, 200px 200px, 190px 190px, 210px 210px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-attachment: fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed, fixed;
 }
 
 /* --- Liste des conversations --- */
@@ -240,22 +244,27 @@
   height: calc(100vh - 80px);
 }
 
+/* Ces éléments sont directement posés sur le fond (pas de panneau
+   opaque derrière), donc couleur éclaircie + ombre légère pour rester
+   lisibles quel que soit l'endroit du dégradé où ils tombent. */
 .chat-vide {
   align-items: center;
   justify-content: center;
-  color: #7a79a0;
+  color: #b3b2d1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
   font-size: 14px;
   gap: 12px;
 }
 
-.chat-vide-icone { font-size: 40px; opacity: .5; }
+.chat-vide-icone { font-size: 40px; opacity: .7; }
 
 .chat-vide-messages {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #7a79a0;
+  color: #b3b2d1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
   font-size: 13px;
   text-align: center;
   padding: 24px;
@@ -267,11 +276,12 @@
   gap: 12px;
   padding: 16px 32px;
   border-bottom: 1px solid rgba(255, 255, 255, .06);
+  background: rgba(13, 13, 43, .35);
 }
 
 .chat-header .avatar { width: 44px; height: 44px; font-size: 14px; }
 .chat-header .nom { font-size: 14px; font-weight: 600; }
-.chat-header .statut { font-size: 11px; color: #7a79a0; }
+.chat-header .statut { font-size: 11px; color: #b3b2d1; }
 .chat-header .statut.en-ligne { color: #4ade80; }
 
 .messages {

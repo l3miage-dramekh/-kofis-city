@@ -71,7 +71,7 @@ export class MessagerieService {
         { id: 'm2', expediteur: 'moi', type: 'texte', texte: 'Super ! Merci de votre confiance, Moussa.', heure: '14:29', lu: true },
         { id: 'm3', expediteur: 'contact', type: 'texte', texte: 'Je commande 3 autres pour mes amis. Prix groupé ?', heure: '14:30', lu: true },
         { id: 'm4', expediteur: 'moi', type: 'texte', texte: '-10% dès 3 unités = 76 950 FCFA les 3.', heure: '14:31', lu: true },
-        { id: 'm5', expediteur: 'moi', type: 'produit', produit: { nom: 'Casque Bluetooth Pro', prix: 76950, quantite: 3, moyensPaiement: ['Wave', 'Orange Money'] }, heure: '14:31', lu: true }
+        { id: 'm5', expediteur: 'moi', type: 'produit', produit: { nom: 'Casque Bluetooth Pro', prix: 76950, quantite: 3, moyensPaiement: ['Wave', 'Orange Money', 'Carte bancaire'] }, heure: '14:31', lu: true }
       ]
     },
     {

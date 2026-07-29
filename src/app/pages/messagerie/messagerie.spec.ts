@@ -81,6 +81,7 @@ describe('Messagerie', () => {
 
     expect(libelles).toContain('Wave');
     expect(libelles).toContain('Orange Money');
+    expect(libelles).toContain('Carte bancaire');
   });
 
   it('charge les contacts disponibles pour démarrer une nouvelle conversation', async () => {
