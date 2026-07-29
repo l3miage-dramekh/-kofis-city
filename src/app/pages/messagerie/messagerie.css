@@ -270,6 +270,25 @@
   padding: 24px;
 }
 
+.btn-retour {
+  display: none;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  line-height: 1;
+  padding: 6px 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.btn-retour:hover { color: #cbb8f2; }
+
+.btn-retour:focus-visible {
+  outline: 2px solid #9b72e8;
+  outline-offset: 2px;
+}
+
 .chat-header {
   display: flex;
   align-items: center;
@@ -451,10 +470,30 @@
 }
 
 @media (max-width: 768px) {
+  /* Sur mobile, la liste et le chat se partagent tout l'écran chacun
+     leur tour plutôt que d'être compressés côte à côte : la liste est
+     affichée en plein écran par défaut, et ouvrir une conversation
+     bascule vers le chat (classe .vue-chat-mobile posée par le
+     composant), avec un bouton retour (←) pour revenir à la liste. */
   .messagerie {
     grid-template-columns: 1fr;
   }
-  .liste-conversations {
+
+  .chat, .chat-vide {
     display: none;
+  }
+
+  .messagerie.vue-chat-mobile .liste-conversations {
+    display: none;
+  }
+
+  .messagerie.vue-chat-mobile .chat,
+  .messagerie.vue-chat-mobile .chat-vide {
+    display: flex;
+  }
+
+  .btn-retour {
+    display: inline-flex;
+    align-items: center;
   }
 }

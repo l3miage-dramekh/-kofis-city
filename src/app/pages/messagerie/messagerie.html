@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="messagerie">
+<div class="messagerie" [class.vue-chat-mobile]="vueMobile === 'chat'">
   <aside class="liste-conversations">
     <div class="liste-header">
       <h1>Messages</h1>
@@ -85,6 +85,11 @@
 
   <section class="chat" *ngIf="conversationActive; else aucuneConversation">
     <div class="chat-header">
+      <button
+        type="button"
+        class="btn-retour"
+        (click)="retourListe()"
+        aria-label="Retour à la liste des conversations">←</button>
       <div class="avatar" aria-hidden="true">{{ conversationActive.initiales }}</div>
       <div>
         <h2 class="nom">{{ conversationActive.nom }}</h2>

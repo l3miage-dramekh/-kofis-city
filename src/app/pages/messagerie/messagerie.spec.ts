@@ -28,6 +28,30 @@ describe('Messagerie', () => {
     expect(component.conversations.length).toBeGreaterThan(0);
     expect(component.conversationActive).toBeTruthy();
     expect(component.conversationActive?.id).toBe(component.conversations[0].id);
+    // La sélection automatique au chargement ne doit pas basculer la
+    // vue mobile vers le chat : sur téléphone, on veut voir la liste
+    // en premier, pas être projeté directement dans une conversation.
+    expect(component.vueMobile).toBe('liste');
+  });
+
+  it("cliquer sur une conversation bascule la vue mobile vers le chat, et le bouton retour revient à la liste", async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const deuxiemeConversation: HTMLButtonElement = fixture.nativeElement.querySelectorAll('.grille-contacts .carte-contact')[2];
+    deuxiemeConversation.click();
+    fixture.detectChanges();
+
+    expect(component.vueMobile).toBe('chat');
+    expect(fixture.nativeElement.querySelector('.messagerie').classList).toContain('vue-chat-mobile');
+
+    const boutonRetour: HTMLButtonElement = fixture.nativeElement.querySelector('.btn-retour');
+    expect(boutonRetour).toBeTruthy();
+    boutonRetour.click();
+    fixture.detectChanges();
+
+    expect(component.vueMobile).toBe('liste');
+    expect(fixture.nativeElement.querySelector('.messagerie').classList).not.toContain('vue-chat-mobile');
   });
 
   it("n'envoie pas de message vide", async () => {

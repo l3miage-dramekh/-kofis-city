@@ -22,6 +22,11 @@ export class Messagerie implements OnInit, AfterViewChecked {
   afficherNouvelleConversation = false;
   menuPaiementOuvertPour: string | null = null;
   noteInfo = '';
+  // Sur mobile, la liste et le chat occupent chacun tout l'écran ;
+  // on affiche la liste par défaut et on bascule vers le chat
+  // uniquement quand l'utilisateur choisit explicitement une
+  // conversation (pas lors de la sélection automatique au chargement).
+  vueMobile: 'liste' | 'chat' = 'liste';
 
   private doitDeraouler = false;
   private declencheurPaiement?: HTMLElement;
@@ -33,7 +38,7 @@ export class Messagerie implements OnInit, AfterViewChecked {
       this.conversations = conversations;
       this.chargement = false;
       if (conversations.length) {
-        this.selectionner(conversations[0]);
+        this.selectionner(conversations[0], false);
       }
     });
     this.messagerieService.getContactsDisponibles().subscribe(contacts => {
@@ -63,10 +68,17 @@ export class Messagerie implements OnInit, AfterViewChecked {
     return this.conversations.filter(c => c.enLigne).length;
   }
 
-  selectionner(conversation: Conversation) {
+  selectionner(conversation: Conversation, viaUtilisateur = true) {
     this.conversationActive = conversation;
     conversation.nonLus = 0;
     this.doitDeraouler = true;
+    if (viaUtilisateur) {
+      this.vueMobile = 'chat';
+    }
+  }
+
+  retourListe() {
+    this.vueMobile = 'liste';
   }
 
   envoyer() {
