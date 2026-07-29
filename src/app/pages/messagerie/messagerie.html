@@ -4,12 +4,49 @@
   <aside class="liste-conversations">
     <div class="liste-header">
       <h3>Messages</h3>
+      <p class="sous-titre">
+        Discussions privées et par pôle
+        <span class="statut-en-ligne" *ngIf="nombreEnLigne > 0">· {{ nombreEnLigne }} en ligne</span>
+      </p>
       <input
         type="text"
         class="recherche"
-        placeholder="Rechercher..."
+        placeholder="Rechercher un contact ou un pôle..."
         aria-label="Rechercher une conversation"
         [(ngModel)]="recherche" />
+    </div>
+
+    <div class="nouvelle-conversation-bloc">
+      <button
+        type="button"
+        class="btn-nouvelle-conversation"
+        (click)="basculerNouvelleConversation()"
+        [attr.aria-expanded]="afficherNouvelleConversation">
+        <span>+</span> Nouvelle conversation
+      </button>
+
+      <div class="dropdown-contacts" *ngIf="afficherNouvelleConversation">
+        <button
+          type="button"
+          class="contact-disponible"
+          *ngFor="let contact of contactsDisponibles; trackBy: identifierContact"
+          (click)="demarrerAvec(contact)">
+          <div class="avatar avatar-petit">{{ contact.initiales }}</div>
+          <div class="contact-info">
+            <span class="nom">{{ contact.nom }}</span>
+            <span class="pole">{{ contact.pole }}</span>
+          </div>
+          <span class="point-statut" [class.en-ligne]="contact.enLigne"></span>
+        </button>
+
+        <p class="aucun-contact" *ngIf="!contactsDisponibles.length">
+          Tous tes contacts ont déjà une conversation.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-titre" *ngIf="!chargement">
+      Conversations ({{ conversationsFiltrees.length }})
     </div>
 
     <div class="conversations" *ngIf="!chargement">
@@ -53,6 +90,10 @@
     </div>
 
     <div class="messages" #zoneMessages>
+      <div class="chat-vide-messages" *ngIf="!conversationActive.messages.length">
+        <p>Aucun message pour l'instant. Dis bonjour à {{ conversationActive.nom }} 👋</p>
+      </div>
+
       <ng-container *ngFor="let message of conversationActive.messages; trackBy: identifierMessage">
         <div class="message" [class.moi]="message.expediteur === 'moi'" *ngIf="message.type === 'texte'">
           <p>{{ message.texte }}</p>
@@ -94,6 +135,7 @@
 
   <ng-template #aucuneConversation>
     <section class="chat chat-vide">
+      <div class="chat-vide-icone">💬</div>
       <p>Sélectionne une conversation pour commencer à discuter.</p>
     </section>
   </ng-template>

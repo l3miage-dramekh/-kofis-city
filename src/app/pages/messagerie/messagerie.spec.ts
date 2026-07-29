@@ -71,4 +71,35 @@ describe('Messagerie', () => {
     expect(boutonPayer).toBeTruthy();
     expect(boutonPayer?.disabled).toBe(true);
   });
+
+  it('charge les contacts disponibles pour démarrer une nouvelle conversation', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(component.contactsDisponibles.length).toBeGreaterThan(0);
+  });
+
+  it('démarre une nouvelle conversation avec un contact disponible et la sélectionne', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const nbConversationsAvant = component.conversations.length;
+    const nbContactsAvant = component.contactsDisponibles.length;
+    const contact = component.contactsDisponibles[0];
+
+    component.demarrerAvec(contact);
+
+    expect(component.conversations.length).toBe(nbConversationsAvant + 1);
+    expect(component.contactsDisponibles.length).toBe(nbContactsAvant - 1);
+    expect(component.conversationActive?.nom).toBe(contact.nom);
+    expect(component.conversationActive?.messages.length).toBe(0);
+  });
+
+  it('calcule le nombre de contacts en ligne', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const enLigneAttendu = component.conversations.filter(c => c.enLigne).length;
+    expect(component.nombreEnLigne).toBe(enLigneAttendu);
+  });
 });

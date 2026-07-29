@@ -30,6 +30,14 @@ export interface Conversation {
   messages: Message[];
 }
 
+export interface ContactDisponible {
+  id: string;
+  nom: string;
+  pole: string;
+  initiales: string;
+  enLigne: boolean;
+}
+
 /**
  * Service de messagerie KOFIS City.
  *
@@ -102,6 +110,14 @@ export class MessagerieService {
     }
   ];
 
+  // Citoyens avec qui on peut démarrer une nouvelle conversation.
+  // (dans une vraie implémentation, viendrait d'un endpoint /citoyens)
+  private contactsDisponibles: ContactDisponible[] = [
+    { id: 'aicha-ndiaye', nom: 'Aïcha Ndiaye', pole: 'Éducation', initiales: 'AN', enLigne: true },
+    { id: 'boubacar-sy', nom: 'Boubacar Sy', pole: 'Tech & Innovation', initiales: 'BS', enLigne: false },
+    { id: 'fatou-diop', nom: 'Fatou Diop', pole: 'Musique', initiales: 'FD', enLigne: true }
+  ];
+
   getConversations(): Observable<Conversation[]> {
     return of(this.conversations);
   }
@@ -110,6 +126,41 @@ export class MessagerieService {
     return this.getConversations().pipe(
       map(conversations => conversations.find(c => c.id === id))
     );
+  }
+
+  getContactsDisponibles(): Observable<ContactDisponible[]> {
+    return of(this.contactsDisponibles);
+  }
+
+  // Crée une conversation vide avec un contact et le retire de la liste
+  // des contacts disponibles (comme démarrer une vraie discussion).
+  demarrerConversation(contactId: string): Observable<Conversation | undefined> {
+    const contact = this.contactsDisponibles.find(c => c.id === contactId);
+    if (!contact) {
+      return of(undefined);
+    }
+
+    const dejaExistante = this.conversations.find(c => c.id === contact.id);
+    if (dejaExistante) {
+      return of(dejaExistante);
+    }
+
+    const nouvelleConversation: Conversation = {
+      id: contact.id,
+      nom: contact.nom,
+      pole: contact.pole,
+      initiales: contact.initiales,
+      enLigne: contact.enLigne,
+      dernierMessage: 'Nouvelle conversation',
+      heure: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+      nonLus: 0,
+      messages: []
+    };
+
+    this.conversations.unshift(nouvelleConversation);
+    this.contactsDisponibles = this.contactsDisponibles.filter(c => c.id !== contactId);
+
+    return of(nouvelleConversation);
   }
 
   envoyerMessage(conversationId: string, texte: string): Observable<Message> {
