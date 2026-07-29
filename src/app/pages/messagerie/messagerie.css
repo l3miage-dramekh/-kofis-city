@@ -40,7 +40,7 @@
   padding: 24px 20px 16px;
 }
 
-.liste-header h3 {
+.liste-header h1 {
   margin: 0 0 4px;
   font-family: Georgia, serif;
   font-size: 20px;
@@ -220,7 +220,7 @@
   flex-shrink: 0;
 }
 
-.nom { font-size: 13px; font-weight: 600; }
+.nom { margin: 0; font-size: 13px; font-weight: 600; }
 
 .aucun-resultat,
 .aucun-contact {
@@ -342,8 +342,21 @@
   white-space: nowrap;
 }
 
+.btn-payer {
+  cursor: pointer;
+}
+
 .btn-payer:disabled {
   cursor: not-allowed;
+}
+
+.btn-payer:focus-visible,
+.moyen-paiement-option:focus-visible,
+.btn-envoyer:focus-visible,
+.recherche:focus-visible,
+.saisie input:focus-visible {
+  outline: 2px solid #9b72e8;
+  outline-offset: 2px;
 }
 
 .badge-bientot {

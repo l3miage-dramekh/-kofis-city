@@ -101,6 +101,81 @@ describe('Messagerie', () => {
     expect(fixture.nativeElement.querySelector('.menu-paiement')).toBeFalsy();
   });
 
+  it("choisir un moyen de paiement rend le focus au bouton Payer (accessibilité clavier)", async () => {
+    document.body.appendChild(fixture.nativeElement);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const boutonPayer: HTMLButtonElement = fixture.nativeElement.querySelector('.btn-payer');
+    boutonPayer.click();
+    fixture.detectChanges();
+
+    const optionsPaiement: HTMLButtonElement[] = Array.from(
+      fixture.nativeElement.querySelectorAll('.moyen-paiement-option')
+    );
+    const optionWave = optionsPaiement.find(el => el.textContent?.trim() === 'Wave');
+    optionWave?.click();
+    fixture.detectChanges();
+
+    expect(document.activeElement).toBe(boutonPayer);
+    document.body.removeChild(fixture.nativeElement);
+  });
+
+  it('la touche Échap referme le menu de paiement et rend le focus au bouton Payer', async () => {
+    document.body.appendChild(fixture.nativeElement);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const boutonPayer: HTMLButtonElement = fixture.nativeElement.querySelector('.btn-payer');
+    boutonPayer.click();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.menu-paiement')).toBeTruthy();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    fixture.detectChanges();
+
+    expect(component.menuPaiementOuvertPour).toBeNull();
+    expect(fixture.nativeElement.querySelector('.menu-paiement')).toBeFalsy();
+    expect(document.activeElement).toBe(boutonPayer);
+    document.body.removeChild(fixture.nativeElement);
+  });
+
+  it('un clic en dehors du bloc paiement referme le menu', async () => {
+    document.body.appendChild(fixture.nativeElement);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const boutonPayer: HTMLButtonElement = fixture.nativeElement.querySelector('.btn-payer');
+    boutonPayer.click();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.menu-paiement')).toBeTruthy();
+
+    const zoneExterieure: HTMLElement = fixture.nativeElement.querySelector('.liste-conversations');
+    zoneExterieure.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    fixture.detectChanges();
+
+    expect(component.menuPaiementOuvertPour).toBeNull();
+    expect(fixture.nativeElement.querySelector('.menu-paiement')).toBeFalsy();
+    document.body.removeChild(fixture.nativeElement);
+  });
+
+  it("la page a une hiérarchie de titres correcte (h1 pour la liste, h2 pour la conversation active)", async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Messages');
+    expect(fixture.nativeElement.querySelector('.chat-header h2')).toBeTruthy();
+  });
+
+  it("la zone de messages est annoncée aux lecteurs d'écran (role=log)", async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const zoneMessages = fixture.nativeElement.querySelector('.messages');
+    expect(zoneMessages?.getAttribute('role')).toBe('log');
+    expect(zoneMessages?.getAttribute('aria-live')).toBe('polite');
+  });
+
   it('charge les contacts disponibles pour démarrer une nouvelle conversation', async () => {
     fixture.detectChanges();
     await fixture.whenStable();

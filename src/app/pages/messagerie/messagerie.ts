@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Navbar } from '../../shared/navbar/navbar';
@@ -24,6 +24,7 @@ export class Messagerie implements OnInit, AfterViewChecked {
   noteInfo = '';
 
   private doitDeraouler = false;
+  private declencheurPaiement?: HTMLElement;
 
   constructor(private messagerieService: MessagerieService) {}
 
@@ -84,14 +85,48 @@ export class Messagerie implements OnInit, AfterViewChecked {
     this.afficherNouvelleConversation = !this.afficherNouvelleConversation;
   }
 
-  basculerMenuPaiement(messageId: string) {
-    this.menuPaiementOuvertPour = this.menuPaiementOuvertPour === messageId ? null : messageId;
+  basculerMenuPaiement(messageId: string, evenement: MouseEvent) {
+    const ouverture = this.menuPaiementOuvertPour !== messageId;
+    this.menuPaiementOuvertPour = ouverture ? messageId : null;
+    this.declencheurPaiement = ouverture ? (evenement.currentTarget as HTMLElement) : undefined;
   }
 
   choisirMoyenPaiement(moyen: string) {
-    this.menuPaiementOuvertPour = null;
+    this.fermerMenuPaiement(true);
     this.noteInfo = `Paiement par ${moyen} — bientôt disponible (nécessite l'intégration backend).`;
     setTimeout(() => (this.noteInfo = ''), 4000);
+  }
+
+  // Ferme le menu si on clique n'importe où en dehors du bloc paiement
+  // (comportement attendu de tout menu déroulant : cliquer ailleurs le referme).
+  @HostListener('document:click', ['$event'])
+  onClicDocument(evenement: MouseEvent) {
+    if (this.menuPaiementOuvertPour === null) {
+      return;
+    }
+    const cible = evenement.target as HTMLElement;
+    if (!cible.closest('.bloc-paiement')) {
+      this.fermerMenuPaiement(false);
+    }
+  }
+
+  // Échap referme le menu de paiement en priorité, sinon le panneau
+  // "nouvelle conversation" s'il est ouvert — pratique au clavier.
+  @HostListener('document:keydown.escape')
+  onEchap() {
+    if (this.menuPaiementOuvertPour !== null) {
+      this.fermerMenuPaiement(true);
+    } else if (this.afficherNouvelleConversation) {
+      this.afficherNouvelleConversation = false;
+    }
+  }
+
+  private fermerMenuPaiement(rendreLeFocus: boolean) {
+    this.menuPaiementOuvertPour = null;
+    if (rendreLeFocus) {
+      this.declencheurPaiement?.focus();
+    }
+    this.declencheurPaiement = undefined;
   }
 
   demarrerAvec(contact: ContactDisponible) {

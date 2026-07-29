@@ -3,7 +3,7 @@
 <div class="messagerie">
   <aside class="liste-conversations">
     <div class="liste-header">
-      <h3>Messages</h3>
+      <h1>Messages</h1>
       <p class="sous-titre">
         Discussions privées et par pôle
         <span class="statut-en-ligne" *ngIf="nombreEnLigne > 0">· {{ nombreEnLigne }} en ligne</span>
@@ -85,16 +85,16 @@
 
   <section class="chat" *ngIf="conversationActive; else aucuneConversation">
     <div class="chat-header">
-      <div class="avatar">{{ conversationActive.initiales }}</div>
+      <div class="avatar" aria-hidden="true">{{ conversationActive.initiales }}</div>
       <div>
-        <div class="nom">{{ conversationActive.nom }}</div>
+        <h2 class="nom">{{ conversationActive.nom }}</h2>
         <div class="statut" [class.en-ligne]="conversationActive.enLigne">
           {{ conversationActive.enLigne ? '● En ligne' : conversationActive.pole }}
         </div>
       </div>
     </div>
 
-    <div class="messages" #zoneMessages>
+    <div class="messages" #zoneMessages role="log" aria-label="Historique des messages" aria-live="polite">
       <div class="chat-vide-messages" *ngIf="!conversationActive.messages.length">
         <p>Aucun message pour l'instant. Dis bonjour à {{ conversationActive.nom }} 👋</p>
       </div>
@@ -115,7 +115,7 @@
             <button
               type="button"
               class="btn-payer"
-              (click)="basculerMenuPaiement(message.id)"
+              (click)="basculerMenuPaiement(message.id, $event)"
               [attr.aria-expanded]="menuPaiementOuvertPour === message.id"
               aria-haspopup="true">
               Payer <span class="badge-bientot">Bientôt</span>
