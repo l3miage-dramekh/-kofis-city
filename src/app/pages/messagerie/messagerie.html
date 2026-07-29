@@ -111,13 +111,18 @@
             <div class="produit-nom">{{ produit.nom }}<span *ngIf="produit.quantite"> × {{ produit.quantite }}</span></div>
             <div class="produit-prix">{{ formaterPrix(produit.prix) }}</div>
           </div>
-          <button
-            type="button"
-            class="btn-payer"
-            disabled
-            title="Paiement Wave bientôt disponible — intégration backend en cours">
-            Payer Wave <span class="badge-bientot">Bientôt</span>
-          </button>
+          <div class="bloc-paiement">
+            <button
+              type="button"
+              class="btn-payer"
+              disabled
+              [title]="'Paiement bientôt disponible (' + (produit.moyensPaiement || ['Wave']).join(', ') + ') — intégration backend en cours'">
+              Payer <span class="badge-bientot">Bientôt</span>
+            </button>
+            <div class="moyens-paiement" *ngIf="produit.moyensPaiement?.length">
+              <span class="moyen-paiement" *ngFor="let moyen of produit.moyensPaiement">{{ moyen }}</span>
+            </div>
+          </div>
         </div>
       </ng-container>
     </div>

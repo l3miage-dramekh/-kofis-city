@@ -63,13 +63,24 @@ describe('Messagerie', () => {
     expect(component.conversationsFiltrees.every(c => c.pole?.toLowerCase().includes('éducation'))).toBeTruthy();
   });
 
-  it('le bouton Payer Wave est désactivé (paiement pas encore implémenté)', async () => {
+  it('le bouton Payer est désactivé (paiement pas encore implémenté)', async () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
     const boutonPayer: HTMLButtonElement | null = fixture.nativeElement.querySelector('.btn-payer');
     expect(boutonPayer).toBeTruthy();
     expect(boutonPayer?.disabled).toBe(true);
+  });
+
+  it('propose plusieurs moyens de paiement (pas seulement Wave)', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const moyens: NodeListOf<HTMLSpanElement> = fixture.nativeElement.querySelectorAll('.moyen-paiement');
+    const libelles = Array.from(moyens).map(el => el.textContent?.trim());
+
+    expect(libelles).toContain('Wave');
+    expect(libelles).toContain('Orange Money');
   });
 
   it('charge les contacts disponibles pour démarrer une nouvelle conversation', async () => {
