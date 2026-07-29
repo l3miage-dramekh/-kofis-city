@@ -180,27 +180,37 @@
 .produit-prix { font-size: 12px; color: #9b72e8; margin-top: 2px; }
 
 .btn-payer {
-  background: linear-gradient(135deg, #0a5e48, #0f6e56);
-  color: white;
-  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, .08);
+  color: #9a99b8;
+  border: 1px solid rgba(255, 255, 255, .12);
   border-radius: 8px;
   padding: 8px 14px;
   font-size: 12px;
   font-weight: 600;
-  cursor: pointer;
   white-space: nowrap;
 }
 
-.btn-payer:hover { opacity: .9; }
+.btn-payer:disabled {
+  cursor: not-allowed;
+}
 
-.note-info {
-  margin: 0 32px 12px;
-  padding: 10px 14px;
-  background: rgba(155, 114, 232, .12);
-  border: 1px solid rgba(155, 114, 232, .3);
-  border-radius: 10px;
-  font-size: 12px;
+.badge-bientot {
+  background: rgba(155, 114, 232, .25);
   color: #cbb8f2;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+
+.aucun-resultat {
+  padding: 20px;
+  color: #7a79a0;
+  font-size: 13px;
+  text-align: center;
 }
 
 .saisie {

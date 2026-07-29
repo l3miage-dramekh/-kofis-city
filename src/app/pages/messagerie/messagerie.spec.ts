@@ -39,4 +39,36 @@ describe('Messagerie', () => {
     component.envoyer();
     expect(component.conversationActive?.messages.length).toBe(messagesAvant);
   });
+
+  it('filtre les conversations par nom via la recherche', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(component.conversationsFiltrees.length).toBe(component.conversations.length);
+
+    component.recherche = 'Moussa';
+    expect(component.conversationsFiltrees.length).toBe(1);
+    expect(component.conversationsFiltrees[0].nom).toContain('Moussa');
+
+    component.recherche = 'nom-qui-nexiste-pas';
+    expect(component.conversationsFiltrees.length).toBe(0);
+  });
+
+  it('filtre aussi par nom de pôle', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    component.recherche = 'éducation';
+    expect(component.conversationsFiltrees.length).toBeGreaterThan(0);
+    expect(component.conversationsFiltrees.every(c => c.pole?.toLowerCase().includes('éducation'))).toBeTruthy();
+  });
+
+  it('le bouton Payer Wave est désactivé (paiement pas encore implémenté)', async () => {
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const boutonPayer: HTMLButtonElement | null = fixture.nativeElement.querySelector('.btn-payer');
+    expect(boutonPayer).toBeTruthy();
+    expect(boutonPayer?.disabled).toBe(true);
+  });
 });

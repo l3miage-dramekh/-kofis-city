@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Navbar } from '../../shared/navbar/navbar';
-import { Conversation, MessagerieService, ProduitPartage } from '../../services/messagerie';
+import { Conversation, Message, MessagerieService } from '../../services/messagerie';
 
 @Component({
   selector: 'app-messagerie',
@@ -10,12 +10,16 @@ import { Conversation, MessagerieService, ProduitPartage } from '../../services/
   templateUrl: './messagerie.html',
   styleUrl: './messagerie.css'
 })
-export class Messagerie implements OnInit {
+export class Messagerie implements OnInit, AfterViewChecked {
+  @ViewChild('zoneMessages') zoneMessages?: ElementRef<HTMLDivElement>;
+
   conversations: Conversation[] = [];
   conversationActive: Conversation | undefined;
   nouveauMessage = '';
+  recherche = '';
   chargement = true;
-  noteInfo = '';
+
+  private doitDeraouler = false;
 
   constructor(private messagerieService: MessagerieService) {}
 
@@ -29,9 +33,28 @@ export class Messagerie implements OnInit {
     });
   }
 
+  ngAfterViewChecked() {
+    if (this.doitDeraouler) {
+      this.deraouler();
+      this.doitDeraouler = false;
+    }
+  }
+
+  get conversationsFiltrees(): Conversation[] {
+    const terme = this.recherche.trim().toLowerCase();
+    if (!terme) {
+      return this.conversations;
+    }
+    return this.conversations.filter(conversation =>
+      conversation.nom.toLowerCase().includes(terme) ||
+      (conversation.pole ?? '').toLowerCase().includes(terme)
+    );
+  }
+
   selectionner(conversation: Conversation) {
     this.conversationActive = conversation;
     conversation.nonLus = 0;
+    this.doitDeraouler = true;
   }
 
   envoyer() {
@@ -42,15 +65,26 @@ export class Messagerie implements OnInit {
     const conversationId = this.conversationActive.id;
     this.messagerieService.envoyerMessage(conversationId, texte).subscribe(() => {
       this.nouveauMessage = '';
+      this.doitDeraouler = true;
     });
   }
 
-  payerWave(produit: ProduitPartage) {
-    this.noteInfo = `Paiement Wave de ${produit.prix.toLocaleString('fr-FR')} FCFA — fonctionnalité à venir (nécessite l'intégration Wave côté backend).`;
-    setTimeout(() => (this.noteInfo = ''), 4000);
+  identifierMessage(index: number, message: Message): string {
+    return message.id;
+  }
+
+  identifierConversation(index: number, conversation: Conversation): string {
+    return conversation.id;
   }
 
   formaterPrix(montant: number): string {
     return `${montant.toLocaleString('fr-FR')} FCFA`;
+  }
+
+  private deraouler() {
+    const element = this.zoneMessages?.nativeElement;
+    if (element) {
+      element.scrollTop = element.scrollHeight;
+    }
   }
 }

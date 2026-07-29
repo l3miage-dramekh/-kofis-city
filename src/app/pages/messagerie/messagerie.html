@@ -4,15 +4,21 @@
   <aside class="liste-conversations">
     <div class="liste-header">
       <h3>Messages</h3>
-      <input type="text" class="recherche" placeholder="Rechercher..." />
+      <input
+        type="text"
+        class="recherche"
+        placeholder="Rechercher..."
+        aria-label="Rechercher une conversation"
+        [(ngModel)]="recherche" />
     </div>
 
     <div class="conversations" *ngIf="!chargement">
       <button
         type="button"
         class="conversation-item"
-        *ngFor="let conversation of conversations"
+        *ngFor="let conversation of conversationsFiltrees; trackBy: identifierConversation"
         [class.active]="conversationActive?.id === conversation.id"
+        [attr.aria-current]="conversationActive?.id === conversation.id"
         (click)="selectionner(conversation)">
         <div class="avatar">{{ conversation.initiales }}</div>
         <div class="conversation-info">
@@ -26,6 +32,10 @@
           </div>
         </div>
       </button>
+
+      <p class="aucun-resultat" *ngIf="!conversationsFiltrees.length">
+        Aucune conversation ne correspond à "{{ recherche }}".
+      </p>
     </div>
 
     <div class="chargement" *ngIf="chargement">Chargement des conversations...</div>
@@ -42,8 +52,8 @@
       </div>
     </div>
 
-    <div class="messages">
-      <ng-container *ngFor="let message of conversationActive.messages">
+    <div class="messages" #zoneMessages>
+      <ng-container *ngFor="let message of conversationActive.messages; trackBy: identifierMessage">
         <div class="message" [class.moi]="message.expediteur === 'moi'" *ngIf="message.type === 'texte'">
           <p>{{ message.texte }}</p>
           <span class="heure-message">{{ message.heure }} <span *ngIf="message.expediteur === 'moi'">✓✓</span></span>
@@ -55,20 +65,30 @@
             <div class="produit-nom">{{ produit.nom }}<span *ngIf="produit.quantite"> × {{ produit.quantite }}</span></div>
             <div class="produit-prix">{{ formaterPrix(produit.prix) }}</div>
           </div>
-          <button type="button" class="btn-payer" (click)="payerWave(produit)">Payer Wave →</button>
+          <button
+            type="button"
+            class="btn-payer"
+            disabled
+            title="Paiement Wave bientôt disponible — intégration backend en cours">
+            Payer Wave <span class="badge-bientot">Bientôt</span>
+          </button>
         </div>
       </ng-container>
     </div>
-
-    <p class="note-info" *ngIf="noteInfo">{{ noteInfo }}</p>
 
     <div class="saisie">
       <input
         type="text"
         placeholder="Écrire un message..."
+        aria-label="Écrire un message"
         [(ngModel)]="nouveauMessage"
         (keyup.enter)="envoyer()" />
-      <button type="button" class="btn-envoyer" (click)="envoyer()" [disabled]="!nouveauMessage.trim()">→</button>
+      <button
+        type="button"
+        class="btn-envoyer"
+        aria-label="Envoyer le message"
+        (click)="envoyer()"
+        [disabled]="!nouveauMessage.trim()">→</button>
     </div>
   </section>
 
