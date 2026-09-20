@@ -64,6 +64,17 @@ describe('Dashboard', () => {
     expect(component.prenom).toBe('');
   });
 
+  // BUG confirmé : dashboard.ts:25 fait JSON.parse(data) sans try/catch.
+  // Un kofis_user invalide dans le localStorage fait planter ngOnInit (SyntaxError non capturée).
+  it.fails("ne plante pas et redirige vers /inscription quand kofis_user contient du JSON invalide", async () => {
+    localStorage.setItem('kofis_user', '{invalide');
+
+    expect(() => fixture.detectChanges()).not.toThrow();
+    await fixture.whenStable();
+
+    expect(router.navigate).toHaveBeenCalledWith(['/inscription']);
+  });
+
   it("remplit les informations du citoyen à partir du kofis_user présent dans le localStorage", () => {
     localStorage.setItem('kofis_user', JSON.stringify(UTILISATEUR));
 

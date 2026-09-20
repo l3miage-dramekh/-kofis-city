@@ -109,6 +109,22 @@ describe('Inscription', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/dashboard']);
   });
 
+  // BUG confirmé : inscription.ts:57-59 stocke et redirige sans vérifier que res.token existe.
+  // Si le backend renvoie une réponse 200 sans champ token, "kofis_token" est quand même
+  // écrit (valeur "undefined") et l'utilisateur est redirigé vers /dashboard.
+  it.fails("ne stocke pas de token et ne redirige pas si la réponse du backend n'a pas de champ token", () => {
+    remplirFormulaireValide();
+
+    component.inscrire();
+
+    const requete = httpMock.expectOne(URL_INSCRIPTION);
+    const utilisateur: UtilisateurReponse = { prenom: 'Khoyane', nom: 'Dramé', email: 'khoyane@kofis.city' };
+    requete.flush({ user: utilisateur } as unknown as { token: string; user: UtilisateurReponse });
+
+    expect(localStorage.getItem('kofis_token')).toBeNull();
+    expect(router.navigate).not.toHaveBeenCalledWith(['/dashboard']);
+  });
+
   it('affiche un message dédié quand le serveur est injoignable (status 0)', () => {
     remplirFormulaireValide();
 
