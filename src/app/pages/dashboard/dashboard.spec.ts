@@ -89,6 +89,17 @@ describe('Dashboard', () => {
     expect(router.navigate).not.toHaveBeenCalled();
   });
 
+  it("affiche un message de passeport prêt qui ne mentionne pas d'email envoyé", () => {
+    localStorage.setItem('kofis_user', JSON.stringify(UTILISATEUR));
+
+    fixture.detectChanges();
+
+    const texte = (fixture.nativeElement as HTMLElement).textContent ?? '';
+    expect(texte).toContain('Ton Passeport KOFIS est prêt !');
+    expect(texte).toContain('Télécharge-le dès maintenant avec le bouton ci-dessous.');
+    expect(texte).not.toMatch(/email|boîte mail/i);
+  });
+
   describe('telechargerPasseport', () => {
     beforeEach(() => {
       localStorage.setItem('kofis_user', JSON.stringify(UTILISATEUR));
