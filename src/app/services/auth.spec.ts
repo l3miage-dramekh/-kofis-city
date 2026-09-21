@@ -3,6 +3,7 @@ import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { AuthService } from './auth';
+import { environment } from '../../environments/environment';
 
 interface DonneesInscription {
   prenom: string;
@@ -29,8 +30,8 @@ interface ReponseAuth {
   user: UtilisateurReponse;
 }
 
-const URL_INSCRIPTION = 'https://kofis-backend-pnpm.onrender.com/api/auth/inscription';
-const URL_CONNEXION = 'https://kofis-backend-pnpm.onrender.com/api/auth/connexion';
+const URL_INSCRIPTION = `${environment.apiUrl}/inscription`;
+const URL_CONNEXION = `${environment.apiUrl}/connexion`;
 const URL_TELECHARGEMENT = 'https://kofis-backend-pnpm.onrender.com/api/passeport/telecharger';
 
 describe('AuthService', () => {

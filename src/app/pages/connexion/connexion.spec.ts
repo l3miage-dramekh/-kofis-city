@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { Connexion } from './connexion';
+import { environment } from '../../../environments/environment';
 
 interface UtilisateurReponse {
   prenom: string;
@@ -11,7 +12,7 @@ interface UtilisateurReponse {
   email: string;
 }
 
-const URL_CONNEXION = 'https://kofis-backend-pnpm.onrender.com/api/auth/connexion';
+const URL_CONNEXION = `${environment.apiUrl}/connexion`;
 
 describe('Connexion', () => {
   let component: Connexion;

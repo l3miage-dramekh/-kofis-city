@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 import { Inscription } from './inscription';
+import { environment } from '../../../environments/environment';
 
 interface UtilisateurReponse {
   prenom: string;
@@ -11,7 +12,7 @@ interface UtilisateurReponse {
   email: string;
 }
 
-const URL_INSCRIPTION = 'https://kofis-backend-pnpm.onrender.com/api/auth/inscription';
+const URL_INSCRIPTION = `${environment.apiUrl}/inscription`;
 
 describe('Inscription', () => {
   let component: Inscription;
