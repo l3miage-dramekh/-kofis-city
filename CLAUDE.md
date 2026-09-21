@@ -51,3 +51,29 @@ Avant chaque PR, npm run build et npm test doivent passer.
 - Ne mets jamais de secret, mot de passe, token ou clé dans le code ni dans les logs.
 - Si une demande est ambiguë ou touche à la sécurité, pose la question dans la PR au lieu de deviner.
 - Respecte les conventions du code existant : noms français pour les pages et les méthodes métier (inscription, inscrire), commentaires en français.
+
+## Niveaux d'autonomie
+
+### Tu peux le faire sans redemander (sur une branche, sans commit)
+- Ajouter ou améliorer des tests (.spec.ts)
+- Corriger le typage TypeScript (remplacer any par des interfaces)
+- Améliorer l'accessibilité des formulaires (labels, id/name, balise form)
+- Corriger un bug simple hors zones protégées
+- Mettre à jour la documentation et les commentaires
+
+### Demande explicite obligatoire (le message commence par « Demande explicite »)
+- AuthService, stockage du token, JWT, connexion et inscription
+- Paiements (Wave, Orange Money, Stripe)
+- Base de données, migrations, schéma
+- Dépendances (npm install ou mise à jour), angular.json, package.json, CI/CD, déploiement
+- Suppression de fichiers, nouvelle fonctionnalité, changement de plus de 5 fichiers
+
+### Interdit sans demande explicite
+- commit, push, merge, création de PR, déploiement
+- Lire .env ou tout fichier de secrets, appeler des API de production
+- Supprimer des données ou des branches, désactiver ou supprimer des tests pour les faire passer
+
+### Toujours
+- Lancer npm test -- --no-watch et npm run build avant de conclure
+- Résumer chaque changement, et signaler ce qui sort du périmètre au lieu de le faire
+- En cas de doute, poser la question

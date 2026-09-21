@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run build:*)"
+    ],
+    "ask": [
+      "Bash(git commit:*)",
+      "Edit(./angular.json)",
+      "Edit(./package.json)",
+      "Edit(./src/app/services/auth.ts)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(git push:*)",
+      "Bash(git merge:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(rm -rf:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}
